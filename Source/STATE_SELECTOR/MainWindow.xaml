@@ -1,0 +1,51 @@
+﻿<Window x:Class="STATE_SELECTOR.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:STATE_SELECTOR.MVVM.ViewModels" xmlns:VM="clr-namespace:STATE_SELECTOR.MVVM.ViewModels" d:DataContext="{d:DesignInstance Type=local:StatesViewModel}"
+        mc:Ignorable="d"
+        Title="STATE SELECTION" Height="363" Width="800" 
+        x:Name="root">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid Margin="1,3,-1,5">
+        <!-- RESOURCE DICTIONARY -->
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="MainDictionary.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition Width="261*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- CONTENT -->
+        <Label x:Name="tvrLabel" Style="{StaticResource LabelWithBorder}" Content="State" HorizontalAlignment="Left" Height="29" Margin="30,10,0,0" VerticalAlignment="Top" Width="50" FontWeight="Bold"/>
+        
+        <!-- LIST CONTROL -->
+        <ComboBox x:Name="StatesCombo" Height="26" Width="200" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="90,13,0,0" Grid.ColumnSpan="2"
+                 ItemsSource="{Binding StateEntries}" SelectedItem="{Binding SelectedStateItem, Mode=TwoWay}">
+            <!-- TextBlock Visibility="{Binding SelectedItem, ElementName=StatesCombo, Converter={StaticResource NullToVisibilityConverter}}"
+                IsHitTestVisible="False" Text="Select State" / -->
+        </ComboBox>
+        <!-- TextBlock Text="Select State" IsHitTestVisible="False" Margin="100,15,0,300">
+               <TextBlock.Style>
+                   <Style TargetType="TextBlock">
+                       <Setter Property="Visibility" Value="Hidden"/>
+                       <Style.Triggers>
+                           <DataTrigger Binding="{Binding ElementName=StatesCombo, Path=SelectedItem}" Value="{x:Null}">
+                               <Setter Property="Visibility" Value="Visible"/>
+                           </DataTrigger>
+                       </Style.Triggers>
+                   </Style>
+               </TextBlock.Style>
+        </TextBlock -->
+        <TextBlock DataContext="{Binding ElementName=StatesCombo,Path=SelectedItem}" Text="Select State" 
+                   Style="{StaticResource ComboBoxSelectOverlay}" Margin="100,20,0,300"/>
+    </Grid>
+</Window>
